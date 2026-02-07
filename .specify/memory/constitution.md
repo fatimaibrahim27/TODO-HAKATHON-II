@@ -1,86 +1,87 @@
+<!--
+Sync Impact Report:
+- Version change: 1.0.0 → 1.1.0
+- Modified principles: Complete overhaul to focus on security-first development and full-stack web application
+- Added sections: Core principles, Key standards, Architecture constraints specific to Phase 2
+- Removed sections: Previous phase specs (I-V), old constraints
+- Templates requiring updates: ✅ Updated based on new security-focused requirements
+- Follow-up TODOs: None
+-->
 # 📝 Todo App Constitution
 
-**Project:** Evolution of Todo App with AI & Cloud
-
-**Core Principles:**
-- **Spec-Driven Development:** Claude Code generates code; no manual coding.
-- **Incremental Phases:** CLI → Web → AI → Local K8s → Cloud K8s.
-- **AI-Powered Interaction:** Natural language Todo management (Phase III–V).
-- **Reliability:** Testable, scalable, reproducible.
-
-**Constraints:**
-- No manual coding; refine specs until Claude Code succeeds.
-- Latency <1s for AI commands.
-- Full-stack: Next.js + FastAPI + SQLModel + Neon DB.
-- Deployments: Docker, Helm, Minikube, DOKS.
-
-**Success Criteria:**
-- CRUD operations work correctly in all phases.
-- AI chatbot correctly interprets natural language.
-- Local and cloud deployments run reliably.
-
----
-
-## Phase-wise Specs
-
-### Phase I – In-Memory CLI
-- Todo CRUD (`add`, `list`, `update`, `delete`)
-- Mark Done/Pending
-- Due dates & priority
-- Input: CLI commands → Output: in-memory list
-
-### Phase II – Web UI
-- Same functionality as Phase I
-- React/Next.js frontend
-- REST API backend
-
-### Phase III – AI Integration
-- Natural language processing for todo commands
-- Voice input/output capability
-- Intent recognition for todo actions
-
-### Phase IV – Local Kubernetes
-- Containerized deployment
-- Helm charts for deployment
-- Minikube for local testing
-
-### Phase V – Cloud Deployment
-- Production-ready deployment
-- Auto-scaling capabilities
-- Monitoring and observability
+**Project:** Phase-2 Full-Stack Todo Application (Next.js + FastAPI + Neon)
 
 ## Core Principles
 
-### I. Spec-First Development
-Specifications must be written and validated before implementation begins. Every feature follows the spec → plan → tasks → implementation workflow.
+### I. Security-First Development
+All development must prioritize security considerations from the outset. Authentication, data protection, and API security are foundational requirements, not afterthoughts. All user data must be encrypted in transit and at rest. Authentication must follow industry best practices with secure session management.
 
-### II. CLI Interface
-Every functionality starts with a CLI interface for easy testing and debugging. Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats.
+### II. Clear Separation of Concerns
+Frontend, backend, database, and authentication layers must be cleanly separated with well-defined interfaces. Each layer should have distinct responsibilities and minimal coupling. This enables independent development, testing, and maintenance of each component.
 
-### III. Test-First (NON-NEGOTIABLE)
-TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced.
+### III. Spec-Driven & Agentic Workflow
+Development follows a spec-driven approach with automated agents handling implementation. No ad-hoc coding is allowed - all changes must originate from validated specifications. Use the spec → plan → tasks → implementation workflow consistently.
 
-### IV. Incremental Delivery
-Features delivered in small, testable increments following the phase progression from CLI to Cloud.
+### IV. Maintainability and Clean Architecture
+Code must be written with long-term maintainability in mind. Follow clean architecture principles with consistent patterns, proper documentation, and well-organized code structure. Naming conventions and folder structures must be consistent across the project.
 
-### V. Observability
-Structured logging required; All operations must be traceable and monitorable.
+### V. Performance without Changing Features
+Optimizations and performance improvements should enhance speed and efficiency without altering existing functionality. Performance standards must be met while preserving all existing features and user experience.
 
-### VI. Simplicity
-Start simple, follow YAGNI principles; Complexity must be justified.
+## Key Standards
 
-## Additional Constraints
+### Backend API Validation
+All backend APIs must have validated request/response schemas using Pydantic models. Input validation and sanitization are mandatory for all endpoints. Proper HTTP status codes must be returned for all responses.
 
-Technology Stack:
-- Frontend: Next.js
-- Backend: FastAPI
-- Database: SQLModel with Neon DB
-- Deployment: Docker, Helm, Kubernetes
+### Authentication Best Practices
+Authentication must follow industry best practices. Passwords must NEVER be stored in plain text. Use bcrypt or similar for password hashing. JWT or session tokens must be stored in HttpOnly secure cookies to prevent XSS attacks.
 
-Performance Standards:
-- API response time < 1s
-- CLI operations < 100ms
-- AI processing < 1s
+### Database Operations
+All database operations must be safe, parameterized, and traceable. Use prepared statements or ORM methods to prevent SQL injection. Database connections must be properly managed with appropriate connection pooling and error handling.
+
+### Secrets Management
+Environment variables must be used for secrets and API keys. No hardcoded credentials in source code. Secrets must be stored securely and accessed through configuration management.
+
+### Code Quality and Consistency
+Maintain consistent naming conventions and folder structure across the project. Code must follow established style guides for each technology stack. Proper error handling and logging must be implemented throughout.
+
+## Architecture Constraints
+
+### Frontend: Next.js App Router
+- Use Next.js App Router for routing and layout management
+- Implement proper error boundaries and loading states
+- Follow Next.js best practices for performance optimization
+- Use TypeScript for type safety
+
+### Backend: FastAPI REST APIs only
+- Build RESTful APIs using FastAPI with proper validation
+- Implement authentication middleware for protected endpoints
+- Use Pydantic models for request/response validation
+- Include comprehensive API documentation
+
+### Database: Neon Serverless PostgreSQL
+- Leverage Neon's serverless PostgreSQL for scalability
+- Use SQLModel for database modeling and ORM operations
+- Implement proper migration strategies
+- Optimize queries for performance
+
+### Authentication: JWT or Better Auth integration
+- Implement secure authentication using JWT tokens or Better Auth
+- Use secure storage for tokens (HttpOnly cookies)
+- Implement proper token expiration and refresh mechanisms
+- Enforce role-based access control where applicable
+
+### Security: No Direct Frontend-to-Database Access
+- All database access must go through backend APIs
+- Backend serves as the single source of truth
+- Implement proper authorization checks on all endpoints
+- Protect against common web vulnerabilities (XSS, CSRF, etc.)
+
+### Backend as Single Source of Truth
+- Backend manages all business logic and data validation
+- Frontend is responsible for presentation and user interaction
+- APIs serve as the contract between frontend and backend
+- Maintain consistent data formats and validation rules
 
 ## Development Workflow
 
@@ -95,4 +96,4 @@ Performance Standards:
 
 This constitution supersedes all other practices. All implementations must comply with these principles. Amendments require documentation and approval.
 
-**Version**: 1.0.0 | **Ratified**: 2026-02-05 | **Last Amended**: 2026-02-05
+**Version**: 1.1.0 | **Ratified**: 2026-02-05 | **Last Amended**: 2026-02-06

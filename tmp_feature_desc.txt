@@ -1,0 +1,22 @@
+Todo Full-Stack Web Application - Phase II
+
+Target audience: Developers and hackathon judges evaluating the full-stack implementation
+
+Focus:
+- Transform the CLI Todo app into a modern, multi-user web application
+- Implement task CRUD operations with user-specific filtering
+- Integrate secure authentication with Better Auth and JWT tokens
+- Connect frontend (Next.js App Router) to backend (FastAPI) and Neon PostgreSQL
+- Ensure responsive UI and proper API design per Spec-Kit guidelines
+
+Success criteria:
+- All CRUD endpoints working correctly with authentication
+- JWT authentication properly enforced, unauthorized access returns 401
+- Frontend fully responsive with Next.js App Router and Tailwind CSS
+- Database schema implemented in Neon PostgreSQL, tasks linked to users
+- Spec-driven workflow followed using Claude Code + Spec-Kit Plus
+- All tasks persist correctly across sessions
+
+Constraints:
+- Technology stack must be: Next.js 16+, FastAPI, SQLModel, Neon PostgreSQL, Better Auth
+- Must use Spec-Kit workflow

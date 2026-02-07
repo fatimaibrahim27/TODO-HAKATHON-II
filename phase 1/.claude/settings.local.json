@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python tests/console_tests/basic_tests.py:*)",
+      "Bash(python -m tests.console_tests.basic_tests:*)",
+      "Bash(python:*)"
+    ]
+  }
+}
