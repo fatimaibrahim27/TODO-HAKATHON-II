@@ -19,9 +19,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(auth.router)
-app.include_router(todos.router)
+# Include routers with /api prefix
+app.include_router(auth.router, prefix="/api")
+app.include_router(todos.router, prefix="/api")
 
 @app.on_event("startup")
 def on_startup():

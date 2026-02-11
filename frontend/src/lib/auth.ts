@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchCurrentUser = async () => {
     try {
-      const response = await apiClient.get('/auth/me');
+      const response = await apiClient.get('/api/auth/me');
       setUser(response.data);
     } catch (error) {
       console.error('Failed to fetch user:', error);
@@ -84,7 +84,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await apiClient.post('/auth/login', { email, password });
+      const response = await apiClient.post('/api/auth/login', { email, password });
       const { access_token } = response.data;
 
       localStorage.setItem('access_token', access_token);
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (email: string, password: string) => {
     try {
-      const response = await apiClient.post('/auth/register', { email, password });
+      const response = await apiClient.post('/api/auth/register', { email, password });
       const { access_token } = response.data;
 
       localStorage.setItem('access_token', access_token);

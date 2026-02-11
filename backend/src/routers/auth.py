@@ -12,9 +12,9 @@ from ..utils import validate_email
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
-@router.post("/register", response_model=UserRead)
+@router.post("/register", response_model=Token)
 def register(user_data: UserCreateSchema, session: Session = Depends(get_session)):
-    """Register a new user."""
+    """Register a new user and return access token."""
 
     # Validate email format
     if not validate_email(user_data.email):
@@ -44,7 +44,17 @@ def register(user_data: UserCreateSchema, session: Session = Depends(get_session
     session.commit()
     session.refresh(db_user)
 
-    return db_user
+    # Create access token for auto-login
+    access_token_expires = timedelta(minutes=30)
+    access_token = create_access_token(
+        data={"sub": str(db_user.id), "email": db_user.email},
+        expires_delta=access_token_expires
+    )
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer"
+    }
 
 
 @router.post("/login", response_model=Token)

@@ -3,7 +3,7 @@ from sqlmodel import Session, select
 from typing import List
 import uuid
 
-from ..models.todo import Todo, TodoCreate, TodoUpdate
+from ..models.todo import Todo
 from ..models.user import User
 from ..schemas import TodoRead, TodoCreate as TodoCreateSchema, TodoUpdate as TodoUpdateSchema
 from ..database import get_session
@@ -88,7 +88,6 @@ def update_todo(
 @router.patch("/{todo_id}/complete", response_model=TodoRead)
 def update_todo_completion(
     todo_id: uuid.UUID,
-    is_completed: bool,
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session)
 ):
@@ -100,7 +99,8 @@ def update_todo_completion(
     if not db_todo:
         raise HTTPException(status_code=404, detail="Todo not found")
 
-    db_todo.is_completed = is_completed
+    # Toggle the completion status
+    db_todo.is_completed = not db_todo.is_completed
     session.add(db_todo)
     session.commit()
     session.refresh(db_todo)

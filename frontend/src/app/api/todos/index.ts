@@ -70,7 +70,7 @@ export const todoApi = {
   // Toggle todo completion status
   toggleTodoCompletion: async (id: string, isCompleted: boolean): Promise<Todo> => {
     try {
-      const response = await apiClient.patch(`/todos/${id}/complete`, { is_completed: isCompleted });
+      const response = await apiClient.patch(`/todos/${id}/complete`);
       return response.data;
     } catch (error) {
       console.error('Error toggling todo completion:', error);
