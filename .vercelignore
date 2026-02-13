@@ -1,0 +1,13 @@
+backend/
+phase 1/
+src/
+tests/
+*.pyc
+__pycache__/
+venv/
+.env
+*.db
+*.sqlite
+*.sqlite3
+node_modules/
+.git/
